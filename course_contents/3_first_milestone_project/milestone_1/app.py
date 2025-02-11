@@ -51,5 +51,5 @@ def menu():
 
         selection = input(MENU_PROMPT)
 
-
-menu()
+if __name__ == "__main__":
+    menu()
