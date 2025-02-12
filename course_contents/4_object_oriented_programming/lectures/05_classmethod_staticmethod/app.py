@@ -12,25 +12,27 @@ class Student:
         self.marks = []
 
     def average(self):
+        if not self.marks:  # Prevent division by zero
+            return 0  
         return sum(self.marks) / len(self.marks)
-
 
 """
 When we create a new object from the `Student` class and we call a method, we are automagically passing in the `self` parameter:
 """
 
-rolf = Student("Rolf", "MIT")
+# rolf = Student("Rolf", "MIT")
 
-rolf.marks.append(78)
-rolf.marks.append(99)
+# rolf.marks.append(78)
+# rolf.marks.append(99)
+# print(rolf.marks)
 
-print(rolf.average())
+# print(rolf.average())
 
 """
 This is identical to that last line:
 """
 
-print(Student.average(rolf))
+# print(Student.average(rolf))
 
 """
 When we do `object.method()`, Python is in the background calling `Class.method(object)`, so that `self` is always the object that called the method.
@@ -55,10 +57,11 @@ In the first case, `self` would be the `rolf` object, and in the second case `se
 
 Notice that this knowledge now lets us do some very weird stuff (not recommended, as it’ll likely break things):
 """
-
-Student.average(
-    "hello"
-)  # self is now 'hello', comment this out to run the rest of the file.
+# try:
+#     Student.average("hello")  # Now raises a TypeError instead of AttributeError
+# except TypeError as e:
+#     print(f"Error: {e}")
+#  # self is now 'hello', comment this out to run the rest of the file.
 
 """
 Just remember `self` is a parameter like any other; and you can give it any value you want. However, because the method is then accessing `’hello’.marks`, you’ll get an error for the string doesn’t have that property.
@@ -79,14 +82,13 @@ Let’s look at the one that takes the caller’s class as the first argument.
 """
 
 
-class Foo:
-    @classmethod
-    def hi(cls):
-        print(cls.__name__)
+# class Foo:
+#     @classmethod
+#     def hi(cls):
+#         print(cls.__name__)
 
-
-my_object = Foo()
-my_object.hi()  # prints Foo
+# my_object = Foo()
+# my_object.hi()  # prints Foo
 
 ## @staticmethod
 """
@@ -94,14 +96,14 @@ Now one that takes nothing as the first argument.
 """
 
 
-class Foo:
-    @staticmethod
-    def hi():
-        print("I don't take arguments!")
+# class Foo:
+#     @staticmethod
+#     def hi():
+#         print("I don't take arguments!")
 
 
-my_object = Foo()
-my_object.hi()
+# my_object = Foo()
+# my_object.hi()
 
 """
 Those are some terrible examples! Let’s look at some more in the next section.
