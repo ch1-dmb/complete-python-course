@@ -4,7 +4,7 @@ file = open('friends_json.txt', 'r')
 file_contents = json.load(file)  # reads file and turns it to dictionary
 
 file.close()
-
+print(file_contents['friends'])
 print(file_contents['friends'][0])
 
 cars = [

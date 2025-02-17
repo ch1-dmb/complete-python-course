@@ -6,12 +6,14 @@ friends = input('Enter three friend names, separated by commas (no spaces, pleas
 
 people = open('people.txt', 'r')
 people_nearby = [line.strip() for line in people.readlines()]
-
+# line.strip() elimincate space before and after the line
 people.close()
+print(people_nearby)
 
 friends_set = set(friends)
 people_nearby_set = set(people_nearby)
 
+# intersection only can be used in set
 friends_nearby_set = friends_set.intersection(people_nearby_set)
 
 nearby_friends_file = open('nearby_friends.txt', 'w')
