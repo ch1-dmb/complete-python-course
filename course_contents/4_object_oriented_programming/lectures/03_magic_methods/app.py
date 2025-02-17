@@ -49,7 +49,10 @@ ford_garage = Garage()
 ford_garage.cars.append("Fiesta")
 ford_garage.cars.append("Focus")
 
+print("---GARAGE---")
+#the two below are the same
 print(len(ford_garage))
+print(ford_garage.__len__())
 
 ### Getting a specific item (square bracket notation)
 
@@ -73,7 +76,14 @@ ford_garage = Garage()
 ford_garage.cars.append("Fiesta")
 ford_garage.cars.append("Focus")
 
+
+print("Cars")
 print(ford_garage[1])  # Focus
+print(ford_garage[0])  # Focus
+print(ford_garage.__getitem__(0))
+print('ok')
+
+
 
 """
 A great thing about this is now you can iterate over the garage using a for loop. To do this you need both `__len__` and `__getitem__`:
@@ -123,3 +133,21 @@ There are many magic “dunder” methods you can implement, including some to o
 
 We’ll be learning about all this throughout the course!
 """
+
+print("MOVIEEEEEEEEE")
+class Movie:
+    def __init__(self, name, director):
+        self.name = name
+        self.director = director
+
+    def __repr__(self):
+        return f"Movie(name='{self.name}', director='{self.director}')"
+    # def __str__(self):
+    #     return f"{self.name} directed by {self.director}"
+
+
+movie = Movie("Inception", "Christopher Nolan")
+print(movie)
+print(repr(movie))  # Movie(name='Inception', director='Christopher Nolan')
+print(str(movie))   # Inception directed by Christopher Nolan
+print(movie)        # Also calls __str__
