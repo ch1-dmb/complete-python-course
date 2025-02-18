@@ -4,14 +4,14 @@ A generator in Python is a function that remembers the state it’s in, in betwe
 Let’s explain with an example. Imagine you wanted to build a list of 100 numbers, like this one:
 """
 
-
-def hundred_numbers():
-    nums = []
-    i = 0
-    while i < 100:
-        nums.append(num)
-        i += 1
-    return nums
+# need list to iterate:hundred_numbers = [n for n in range(100)]
+# def hundred_numbers():
+#     nums = []
+#     i = 0
+#     while i < 100:
+#         nums.append(i)
+#         i += 1
+#     return nums
 
 
 """
@@ -27,11 +27,11 @@ You have to run the function every time you want a new number, that’s why it�
 """
 
 
-def hundred_numbers():
-    num = 0
-    while num < 100:
-        yield num
-        num += 1
+# def hundred_numbers():
+#     num = 0
+#     while num < 100:
+#         yield num
+#         num += 1
 
 
 """
@@ -40,17 +40,20 @@ The `yield` keyword is very much like a `return`, in that it gives the value bac
 We could re-write the function as a list comprehension:
 """
 
-hundred_numbers = [n for n in range(100)]
+# hundred_numbers = [n for n in range(100)]
 
 """
 Or indeed as a generator comprehension. This is essentially the same thing, including the `yield` statement.
 """
-
+# cant be list if u r going to use next-generator
 hundred_numbers = (n for n in range(100))
+# print(next(hundred_numbers()))
 print(next(hundred_numbers))
-print(next(hundred_numbers))
-
+# # print(hundred_numbers)
 print(list(hundred_numbers))
+print(sum(hundred_numbers))
+# print(list(hundred_numbers()))
+# print(sum(hundred_numbers()))
 
 """
 Notice that when we do the code snippet above, `next()` runs the function once up until the `yield` (which would give you the first value). The following `next()` runs it again, which gives you the second value. Then, turning it into a list continues and builds a list from the remaining values (that’s only 98 values left).

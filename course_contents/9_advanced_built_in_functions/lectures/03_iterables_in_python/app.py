@@ -12,15 +12,19 @@ class FirstHundredGenerator:
         self.number = 0
 
     def __next__(self):
-        if self.number < 100:
+        if self.number < 30:
             current = self.number
             self.number += 1
             return current
         else:
             raise StopIteration()
+        
+    # def __iter__(self):
+    #         return self
 
 
 class FirstHundredIterable:
+    # its iterable but not iterator, which is like __next__ and __iter__
     def __iter__(self):
         return FirstHundredGenerator()
 
@@ -28,11 +32,18 @@ class FirstHundredIterable:
 """
 Now we have an iterable which uses the iterator to get the next value of the sequence it generates. We can do this:
 """
+# iterable = FirstHundredIterable()
+# iterator = iter(FirstHundredIterable())
+# iterator = iter(iterable)  # This gives you the iterator
+# print(next(iterable))
+# print(next(iterator))
+  # Now you can call next on the iterator
+# print(next(iterator))
+print(sum(FirstHundredIterable()))  # gives 4950, it iterates already
+# print(sum(FirstHundredGenerator()))# need __iter__ return self
 
-print(sum(FirstHundredIterable()))  # gives 4950
-
-for i in FirstHundredIterable():
-    print(i)
+# for i in FirstHundredIterable():
+#     print(i)
 
 """
 Wait… I remember something about for loops. We needed an object with `__len__` and `__getitem__` defined!

@@ -47,11 +47,14 @@ users = [
 
 user_objects = map(User.from_dict, users)
 
+print(list(user_objects))  
+
 """
 The option of using a list comprehension is slightly uglier, I feel:
 """
 
 user_objects = [User.from_dict(u) for u in users]
+# print(user_objects)
 
 """
 Although of course, using dictionary unpacking everything would be made much simpler… More on that in a coming section!

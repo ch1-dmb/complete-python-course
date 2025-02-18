@@ -1,7 +1,9 @@
 """
 The below is class which implements `__next__`as if it was a function using the `yield` keyword:
 """
-
+"""
+__iter__
+"""
 
 class FirstHundredGenerator(object):
     def __init__(self):
@@ -14,11 +16,14 @@ class FirstHundredGenerator(object):
             return current
         else:
             raise StopIteration()
+    def __iter__(self):
+            return self
 
 
 gen = FirstHundredGenerator()
-next(gen)  # 0
-next(gen)  # 1
+print(next(gen)) # 0
+print(next(gen)) # 1
+
 
 """
 Notice how the object, with its property, remembers what the value of `self.number` is at all points in time.
@@ -47,8 +52,11 @@ class FirstFiveIterator:
             return current
         else:
             raise StopIteration()
-
-
+    def __iter__(self):
+            return self
+total_amount = FirstFiveIterator()
+print(next(total_amount))
+print(sum(total_amount))
 """
 As you can see it’s returning numbers that are not being generated; instead they’re being returned from a list.
 
@@ -56,14 +64,14 @@ If we run this code though, we will get an error:
 
 """
 
-sum(FirstHundredGenerator())  # comment this line out to run the rest of the file.
+print(sum(FirstHundredGenerator()))# comment this line out to run the rest of the file.
 
 """
 Similarly if we run this code:
 """
 
-for i in FirstHundredGenerator():
-    print(i)
+# for i in FirstHundredGenerator():
+#     print(i)
 
 """
 And that’s because in Python, an `iterator` and an `iterable` are different things. You can iterate over an `iterable`. The iterator is used to get the next value (either from a sequence or generated values).

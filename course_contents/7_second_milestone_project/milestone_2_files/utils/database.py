@@ -20,7 +20,7 @@ def add_book(name, author):
     with open(books_file, 'a') as file:
         file.write(f'{name},{author},0\n')
 
-
+# Preventing from module import * Imports + internal use
 def _save_all_books(books):
     with open(books_file, 'w') as file:
         for book in books:
