@@ -60,6 +60,7 @@ primes += [7, 11]  # We know += is 'like' primes = primes + [7, 11]...
 
 id(primes)
 
+print(primes)
 """
 You get the same `id` back!!!
 

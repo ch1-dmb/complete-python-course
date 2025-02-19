@@ -23,17 +23,29 @@ movies = [
     {"name": "1917", "director": "Mendes"},
 ]
 
+# the finder here is a function
+# def find_movie(expected, finder):
+#     found = []
+#     for i in movies:
+#         if finder(i) == expected:
+#             found.append(i)
+#         return found
+
+# find_by = input("What property are we searching by? ")
+# looking_for = input("What are you looking for? ")
+# movie_list = find_movie(looking_for, lambda x: x[find_by])
+# print(movie_list or "Nothing")
+
+# or
 
 def find_movie(expected, finder):
     found = []
-    for movie in movies:
-        if finder(movie) == expected:
-            found.append(movie)
-    return found
-
-
+    for i in movies:
+        if i[finder] == expected:
+            found.append(i)
+        return found
 find_by = input("What property are we searching by? ")
 looking_for = input("What are you looking for? ")
-movie = find_movie(looking_for, lambda x: x[find_by])
-print(movie or 'No movies found.')
+movie_list = find_movie(looking_for, find_by)
+print(movie_list or "Nothing")
 
