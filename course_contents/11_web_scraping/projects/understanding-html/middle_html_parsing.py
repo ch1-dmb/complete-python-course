@@ -1,7 +1,5 @@
 import re
-
 from bs4 import BeautifulSoup
-
 
 ITEM_HTML = '''<html><head></head><body>
 <li class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
@@ -21,9 +19,7 @@ ITEM_HTML = '''<html><head></head><body>
         <p class="price_color">£51.77</p>
 <p class="instock availability">
     <i class="icon-ok"></i>
-
         In stock
-
 </p>
     <form>
         <button type="submit" class="btn btn-primary btn-block" data-loading-text="Adding...">Add to basket</button>
@@ -31,41 +27,45 @@ ITEM_HTML = '''<html><head></head><body>
             </div>
     </article>
 </li>
-
 </body></html>
 '''
-
-
 soup = BeautifulSoup(ITEM_HTML, 'html.parser')
 
 
 def find_item_name():
-    locator = 'article.product_pod h3 a'
+    locator = "article.product_pod h3 a"
     item_name = soup.select_one(locator).attrs['title']
     return item_name
 
-
 def find_item_page_link():
-    locator = 'article.product_pod h3 a'
-    item_url = soup.select_one(locator).attrs['href']
-    return item_url
-
+    locator = "article.product_pod h3 a"
+    item_link = soup.select_one(locator).attrs['href']
+    return item_link
 
 def find_item_price():
-    locator = 'article.product_pod p.price_color'
+    locator = "article.product_pod p.price_color"
     item_price = soup.select_one(locator).string
+    # £51.77
+    price_pattern = r"\£([0-9]+\.[0-9]+)"
+    matcher = re.search(price_pattern, item_price)
+    # return item_price
+    # print(matcher.group(1))
 
-    pattern = '£([0-9]+\.[0-9]+)'
-    matcher = re.search(pattern, item_price)
-    return float(matcher.group(1))
-
+    return matcher.group(1)
 
 def find_item_rating():
-    locator = 'article.product_pod p.star-rating'
-    star_rating_element = soup.select_one(locator)
-    classes = star_rating_element.attrs['class']
-    rating_classes = filter(lambda x: x != 'star-rating', classes)
+    locator = "article.product_pod p.star-rating"
+    item_rating = soup.select_one(locator)
+
+    #['star-rating', 'Three']
+    classes = item_rating.attrs['class']
+    print(classes)
+    # it fill filter out the one is not star-rating
+    rating_classes = filter(lambda x: x!="star-rating", classes)
     return next(rating_classes)
+   
+
+ 
 
 
 print(find_item_name())
@@ -76,14 +76,14 @@ print(find_item_rating())
 # You can then turn it into a dictionary or whichever
 # way is easiest to store and work with:
 
-item = {
-    'name': find_item_name(),
-    'link': find_item_page_link(),
-    'price': find_item_price(),
-    'rating': find_item_rating()
-}
+# item = {
+#     'name': find_item_name(),
+#     'link': find_item_page_link(),
+#     'price': find_item_price(),
+#     'rating': find_item_rating()
+# }
 
-print(item)
+# print(item)
 
 # Of course you could make a class which stores this data and
 # has methods to extract it, more on the 'class_html_parsing.py file!

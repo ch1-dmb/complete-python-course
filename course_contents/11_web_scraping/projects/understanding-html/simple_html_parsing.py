@@ -29,11 +29,13 @@ def find_list_items():
 
 
 def find_paragraph():
+    print("here")
     print(simple_soup.find('p', {'class': 'subtitle'}).string)
 
 
 def find_other_paragraph():
     paragraphs = simple_soup.find_all('p')
+    # if it does not have class attribute, the [] is deafult will be empty or None
     other_paragraph = [p for p in paragraphs if 'subtitle' not in p.attrs.get('class', [])]
     print(other_paragraph[0].string)
 
