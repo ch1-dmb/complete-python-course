@@ -18,7 +18,7 @@ page_content = requests.get('http://books.toscrape.com').content
 
 logger.debug('Creating AllBooksPage from page content.')
 page = AllBooksPage(page_content)
-
+print("HERE:{}".format(page))
 _books = []
 
 start = time.time()
