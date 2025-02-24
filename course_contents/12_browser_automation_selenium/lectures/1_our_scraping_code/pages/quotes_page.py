@@ -1,8 +1,13 @@
+import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 from typing import List
 from locators.quotes_page_locators import QuotesPageLocators
 from parsers.quote import QuoteParser, AspxParser
+
 
 
 
@@ -56,17 +61,29 @@ class QuotesPage:
 
     def search_results(self, author_name: str, tag_name: str) -> List[AspxParser]:
         self.get_author(author_name)
+        # Wait for tag dropdown options to load
+        WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, QuotesPageLocators.TAG_DROPDOWN_OPTION))
+        )
+        # ... rest of the method
         try:
+            # Check if tag is valid for author
+            available_tags = self.get_available_tags()
+            if tag_name not in available_tags:
+                raise InvalidTagForAuthorError(f"Author '{author_name}' does not have any quotes tagged with '{tag_name}'.")
             self.get_tag(tag_name)
+            self.search_button.click()
+            # Wait for results to load (adjust locator as needed)
+            WebDriverWait(self.browser, 10).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, QuotesPageLocators.SEARCH))
+            )
+            return self.aspx_quotes
         except InvalidTagForAuthorError as e:
             print(e)
+            return []
         except Exception as e:
-            print(e)
-            print("An unknown error occurred. Please try again.")
-        except Exception:
-            raise InvalidTagForAuthorError(f"Author '{author_name}' does not have any quotes tagged with '{tag_name}'.")
-        self.search_button.click()
-        return self.aspx_quotes
+            print(f"Error during search: {e}")
+            return []
 
 class InvalidTagForAuthorError(ValueError):
     pass
